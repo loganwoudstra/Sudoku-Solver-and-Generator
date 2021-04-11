@@ -48,7 +48,7 @@ class Sudoku:
         for y in range(1,10):
             tk.Grid.rowconfigure(self.frame, y, weight=1)
 
-        # creates buttons
+        # calls function to create buttons
         self.button("Solve Board", 1, 10, self.correct_board)
         self.button("Clear Board", 1, 11, self.clear)
         self.button("New Puzzle", 7, 10, self.new_puzzle)
@@ -58,12 +58,12 @@ class Sudoku:
         self.timer = tk.Label(self.frame, text="0:00", bg='light gray', width=5, font='Arial 35')
         self.timer.grid(column=4, row=10, columnspan=3, rowspan=2, sticky='nsew')
 
-    def button(self, text, column, row, command):
+    def button(self, text, column, row, command):  # creates buttons
         button = tk.Button(self.frame, text=text, highlightthickness=0, highlightbackground='light gray',
                            width=13, font="Arial 20", command=lambda: command())
         button.grid(column=column, row=row, columnspan=3, sticky='nsew')
 
-    def check_sudoku(self):
+    def check_sudoku(self):  # checks if user had correctly filled in a puzzle
         self.clock.stop()
         blank = 0
         wrong = False
@@ -87,7 +87,7 @@ class Sudoku:
         else:
             self.winner_screen(True)
 
-    def winner_screen(self, winner):
+    def winner_screen(self, winner):  #creates a pop up screen when won
         # create GUI
         screen = tk.Tk()
         frame = tk.Frame(screen, bg='light blue')
@@ -153,7 +153,7 @@ class Sudoku:
 
         self.clock.start(0)
 
-    def generate_board(self):
+    def generate_board(self):  # creates a random filled in sudoku for users to solve
         self.clear()
 
         # fills the 3 diagonal boxes
@@ -178,7 +178,7 @@ class Sudoku:
         # solves random board
         self.solve()
 
-    def empty_square(self):
+    def empty_square(self):  # counts how many squares on the board are empty
         num = 0
         for i in range(9):
             num += self.real_numbers[i].count(0)
@@ -280,20 +280,20 @@ class Timer:
         self.repeat = 0
         self.seconds = 0
 
-    def start(self, seconds):
+    def start(self, seconds):  # starts timer
         self.stop()
         self.repeat += 1
         self.seconds = seconds
         self.end = False
         self.increment()
 
-    def stop(self):
+    def stop(self):  #stops timer
         self.end = True
 
-    def increment(self):
+    def increment(self):  # waits 1 second to call a function to update the timer
         self.game.timer.after(1000, self.update_timer, self.repeat)
 
-    def update_timer(self, repeat):
+    def update_timer(self, repeat):  # updates the timer
         if not self.end and repeat == self.repeat:
             self.seconds += 1
             minute = self.seconds // 60
@@ -304,6 +304,6 @@ class Timer:
             self.increment()
 
 
-root = tk.Tk()
-game = Sudoku(root)
+root = tk.Tk()  #creates the root for the GUI
+game = Sudoku(root)  # runs the code
 root.mainloop()
